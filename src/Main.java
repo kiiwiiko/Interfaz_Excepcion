@@ -25,9 +25,10 @@ public class Main {
 
                     switch (opcion) {
                         case 1:
-                            IProducto nuevoProducto = new Producto();
-                            nuevoProducto.ingresarProducto();
-                            listaProductos.add(nuevoProducto);
+                            IProducto nuevoAlimento = new Alimento();
+
+                            nuevoAlimento.ingresarProducto();
+                            listaProductos.add(nuevoAlimento);
                             break;
                         case 2:
                             ICliente nuevoCliente = new Cliente();
@@ -36,7 +37,13 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Productos:");
+                            int contadorAlimentos = 1;
                             for (IProducto producto : listaProductos) {
+                                if (producto instanceof Alimento) {
+                                    System.out.println("ALIMENTO " + contadorAlimentos);
+                                    contadorAlimentos++;
+                                }
+
                                 producto.imprimirProducto();
                                 System.out.println("----------");
                             }
