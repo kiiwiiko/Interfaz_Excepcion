@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Cliente implements ICliente {
@@ -22,29 +23,58 @@ class Cliente implements ICliente {
         boolean ingresoExitosoCedula = false;
         do {
             try {
-                System.out.println("Ingrese la cedula del cliente: ");
+                System.out.println("Ingrese la cedula del cliente (debe tener exactamente 10 dígitos): ");
                 this.cedula = sc.nextInt();
-                if (String.valueOf(this.cedula).length() == 10) {
-                    ingresoExitosoCedula = true;
-                } else {
-                    System.out.println("ERROR: La cedula debe tener exactamente 10 dígitos.");
+                if (String.valueOf(this.cedula).length() != 10) {
+                    throw new IllegalArgumentException("Error: La cédula debe tener exactamente 10 dígitos.");
                 }
+                ingresoExitosoCedula = true;
+                // Solo contener numeros
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: La cédula debe contener solo números.");
+                sc.nextLine();
+                // Excepcion para identificar el tipo de dato.
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: La cédula debe contener solo números.");
+                sc.nextLine();
+                // Excepcion para argumento ilegal o inapropiado.
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
+                // Para todas las excepciones
             } catch (Exception e) {
-                System.out.println("ERROR: La cedula solo puede contener números enteros.");
-                sc.nextLine();  // Limpiar el buffer del scanner
+                System.out.println("¡Error!");
+                sc.nextLine();
             }
         } while (!ingresoExitosoCedula);
 
         boolean ingresoExitosoEdad = false;
         do {
             try {
-                System.out.println("Ingrese la edad del cliente: ");
+                System.out.println("Ingrese la edad del cliente (debe ser mayor de edad): ");
                 this.edad = sc.nextInt();
+                if (this.edad < 18) {
+                    throw new IllegalArgumentException("Error: La edad debe ser mayor de 18 años.");
+                }
+                // Solo contener numeros
+            } catch (NumberFormatException e) {
+                System.out.println("ERROR: La edad debe contener solo números.");
+                sc.nextLine();
                 ingresoExitosoEdad = true;
-            } catch (Exception e) {
+                // Excepcion para identificar el tipo de dato.
+            } catch (InputMismatchException e) {
                 System.out.println("ERROR: La edad del cliente debe ser un dato entero.");
-                sc.nextLine();  // Limpiar el buffer del scanner
+                sc.nextLine();
+                // Excepcion para argumento ilegal o inapropiado.
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
+                // Para todas las excepciones
+            } catch (Exception e) {
+                System.out.println("¡Error!");
+                sc.nextLine();
             }
         } while (!ingresoExitosoEdad);
     }
 }
+

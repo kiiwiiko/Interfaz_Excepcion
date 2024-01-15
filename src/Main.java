@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,18 +16,21 @@ public class Main {
             System.out.println("4. Ver Clientes");
             System.out.println("5. Salir");
 
+            // Solo inicializamos al ingresoExitosoOpcion con False
             boolean ingresoExitosoOpcion = false;
 
+            // Repeticion para cada vez que se tenga un error de opcion
             do {
+                // Excepcion para que cuando no se ingrese el dato que nos esta pidiendo la funcion
                 try {
                     System.out.println("Seleccione una opción: ");
                     int opcion = sc.nextInt();
                     ingresoExitosoOpcion = true;
 
+                    // Pequeña interface
                     switch (opcion) {
                         case 1:
                             IProducto nuevoAlimento = new Alimento();
-
                             nuevoAlimento.ingresarProducto();
                             listaProductos.add(nuevoAlimento);
                             break;
@@ -38,7 +42,9 @@ public class Main {
                         case 3:
                             System.out.println("Productos:");
                             int contadorAlimentos = 1;
+                            // Para Imprimir cada producto
                             for (IProducto producto : listaProductos) {
+                                // Condicion que nos muestra cada produto por el orden de ingreso
                                 if (producto instanceof Alimento) {
                                     System.out.println("ALIMENTO " + contadorAlimentos);
                                     contadorAlimentos++;
@@ -63,8 +69,13 @@ public class Main {
                             System.out.println("ERROR: Opción no válida. Intente de nuevo.");
                             break;
                     }
+                    // Excepcion para identificar el tipo de dato.
+                } catch (InputMismatchException e) {
+                    System.out.println("ERROR: La edad del cliente debe ser un dato entero.");
+                    sc.nextLine();
+                    // Nos muestra el error en pantalla y ingresoExitosoOpcion toma el valor de false
                 } catch (Exception e) {
-                    System.out.println("ERROR: La opcion debe ser numerico.");
+                    System.out.println("ERROR!");
                     sc.nextLine();
                     break;
                 }
