@@ -25,6 +25,9 @@ public class Main {
                 try {
                     System.out.println("Seleccione una opción: ");
                     int opcion = sc.nextInt();
+                    if (opcion > 5) {
+                        throw new IllegalArgumentException("Error: Tenga en cuenta que solo hay 5 opciones.");
+                    }
                     ingresoExitosoOpcion = true;
 
                     // Pequeña interface
@@ -71,7 +74,10 @@ public class Main {
                     }
                     // Excepcion para identificar el tipo de dato.
                 } catch (InputMismatchException e) {
-                    System.out.println("ERROR: La edad del cliente debe ser un dato entero.");
+                    System.out.println("ERROR: La opcion debe ser un dato entero.");
+                    sc.nextLine();
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
                     sc.nextLine();
                     // Nos muestra el error en pantalla y ingresoExitosoOpcion toma el valor de false
                 } catch (Exception e) {
